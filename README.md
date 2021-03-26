@@ -68,7 +68,7 @@ sudo service mysql restart
 
 ### If errors install
 ```
-sudo apt install dovecot-mysql postfix-mysql
+sudo apt install postfix-mysql dovecot-mysql
 ```
 
 ### Postfix dynamic maps configuration file debian 10 (error was here)
