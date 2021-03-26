@@ -6,7 +6,7 @@
 # is /etc/mailname.
 #myorigin = /etc/mailname
 
-myhostname = boo
+myhostname = boo.xx
 
 smtpd_banner = $myhostname ESMTP $mail_name (Debian/GNU)
 biff = no
