@@ -6,17 +6,29 @@ Postfix dovecot mail server mailbox aliases in mysql database. Smtp server virtu
 ### Postfix, dovecot install
 ```
 sudo apt install postfix dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd mysql-server
-sudo apt install dovecot-mysql postfix-mysql
+sudo apt install postfix-mysql dovecot-mysql
 ```
 
 ### User
 ```
-groupadd -g 5000 vmail
-useradd -g vmail -u 5000 vmail -d /var/mail
+sudo groupadd -g 5000 vmail
+sudo useradd -g vmail -u 5000 vmail -d /var/mail
 
-# mail folder !!!
-chown -R root:vmail /var/mail
-chmod -R 770 /var/mail
+# Mail folder
+sudo chown -R root:vmail /var/mail
+sudo chmod -R 770 /var/mail
+
+sudo chown -R vmail:vmail /home/maile
+sudo chmod -R 770 /home/maile
+
+sudo chown -R postfix:root /var/spool/postfix/private
+sudo chmod -R 770 /var/spool/postfix/private
+
+sudo chown -R root:root /etc/postfix
+sudo chmod -R 750 /etc/postfix
+
+sudo chown -R vmail:dovecot /etc/dovecot
+sudo chmod -R 760 /etc/dovecot
 ```
 
 # Mysql server
@@ -40,6 +52,7 @@ sudo mysqladmin -p create mailserver
 
 sudo mysql -p mailserver
 
+GRANT SELECT ON mailserver.* TO 'mailuser'@'localhost' IDENTIFIED BY 'mailuserpass';
 GRANT SELECT ON mailserver.* TO 'mailuser'@'127.0.0.1' IDENTIFIED BY 'mailuserpass';
 FLUSH PRIVILEGES;
 ```
@@ -49,16 +62,6 @@ FLUSH PRIVILEGES;
 sudo mysql -uroot -p < sql/mailserver.sql
 
 sudo service mysql restart
-```
-
-# Dovecot settings see
-https://www.siemaszko.info/serwer-email-z-postfix-dovecot-na-bazie-mysql-debian-lub-ubuntu/
-
-### Dovectot permissions
-```
-# dovecot
-chown -R vmail:dovecot /etc/dovecot
-chmod -R o-rwx /etc/dovecot
 ```
 
 # Errors
@@ -73,15 +76,8 @@ sudo apt install dovecot-mysql postfix-mysql
 ```
 tcp /usr/lib/postfix/dict_tcp.so            dict_tcp_open
 mysql   /usr/lib/postfix/postfix-mysql.so   dict_mysql_open 
-#mysql  /usr/lib/postfix/dict_mysql.so      dict_mysql_open 
+# mysql  /usr/lib/postfix/dict_mysql.so      dict_mysql_open 
 # sqlite  /usr/lib/postfix/dict_sqlite.so   dict_sqlite_open    
-```
-
-### Email dir
-```
-# mail folder !!!
-chown -R root:vmail /var/mail
-chmod -R 770 /var/mail
 ```
 
 ### Logs
