@@ -98,6 +98,13 @@ sudo service dovecot restart
 sudo service mysql restart
 ```
 
+### Send local email
+```
+sudo apt install mailutils
+
+echo "hello message" | mail -s "test message subject" email1@example.com
+```
+
 # References
 - https://www.siemaszko.info/serwer-email-z-postfix-dovecot-na-bazie-mysql-debian-lub-ubuntu/
 - https://serverfault.com/questions/861050/postfix-unsupported-dictionary-type-mysql
