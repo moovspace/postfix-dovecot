@@ -1,0 +1,3 @@
+tcp /usr/lib/postfix/dict_tcp.so        dict_tcp_open
+mysql /usr/lib/postfix/postfix-mysql.so dict_mysql_open
+# mysql	postfix-mysql.so	dict_mysql_open	
