@@ -108,6 +108,16 @@ echo "hello message" | mail -s "test message subject" email2@example.com
 echo "hello message" | mail -s "test message subject" email1@example.com
 ```
 
+### Firewall
+Smtp ports 25,465,587,110,995,143,993
+```
+# Show services
+netstat -tulpn
+
+# Open ports
+ufw allow 25,465,587,995,993
+```
+
 # References
 - https://www.siemaszko.info/serwer-email-z-postfix-dovecot-na-bazie-mysql-debian-lub-ubuntu/
 - https://serverfault.com/questions/861050/postfix-unsupported-dictionary-type-mysql
