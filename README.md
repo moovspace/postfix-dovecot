@@ -10,6 +10,7 @@ sudo apt install postfix-mysql dovecot-mysql
 ```
 
 ### Unpack to dir
+Extract to /
 ```
 mkdir -p /home/username/sample
 tar -xzf postfix-dovecot.tar.gz -C /home/username/sample --same-owner
