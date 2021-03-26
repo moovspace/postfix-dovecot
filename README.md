@@ -9,6 +9,12 @@ sudo apt install postfix dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd 
 sudo apt install postfix-mysql dovecot-mysql
 ```
 
+### Unpack to dir
+```
+mkdir -p /home/username/sample
+tar -xzf postfix-dovecot.tar.gz -C /home/username/sample --same-owner
+```
+
 ### User
 ```
 sudo groupadd -g 5000 vmail
@@ -98,6 +104,7 @@ sudo service mysql restart
 ```
 sudo apt install mailutils
 
+echo "hello message" | mail -s "test message subject" email2@example.com
 echo "hello message" | mail -s "test message subject" email1@example.com
 ```
 
