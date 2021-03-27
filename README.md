@@ -5,7 +5,7 @@ Postfix dovecot mail server mailbox aliases in mysql database. Smtp server virtu
 
 ### Postfix, dovecot install
 ```
-sudo apt install postfix dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd mysql-server
+sudo apt install postfix dovecot-core dovecot-imapd dovecot-pop3d dovecot-lmtpd mariadb-server
 sudo apt install postfix-mysql dovecot-mysql
 ```
 
@@ -40,25 +40,39 @@ sudo chmod -R 760 /etc/dovecot
 
 # Mysql server
 
-### Mysql root user
+### Mysql root user password
 ```
 # root user password
 sudo mysqladmin -uroot password "toor"
 
-# or
-sudo mysql
+# login
+sudo mysql -u root -p
+```
 
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('toor');
-SET PASSWORD FOR 'root'@'127.0.0.1' = PASSWORD('toor');
-FLUSH PRIVILEGES;
+### Secure mysql server
+```bash
+# Change root user
+GRANT ALL ON *.* TO 'root'@'localhost' IDENTIFIED BY 'toor' WITH GRANT OPTION
+GRANT ALL ON *.* TO 'root'@'127.0.0.1' IDENTIFIED BY 'toor' WITH GRANT OPTION
+
+# Mysql_secure_installation
+DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1')
+DELETE FROM mysql.user WHERE User=''
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%'
+
+# Reload
+FLUSH PRIVILEGES
 ```
 
 ### Mysql mailuser and db
 ```
-sudo mysqladmin -p create mailserver
+# Create db
+sudo mysqladmin -u root -p create mailserver
 
-sudo mysql -p mailserver
+# Login to
+sudo mysql -u root -p mailserver
 
+# Create mailuser
 GRANT SELECT ON mailserver.* TO 'mailuser'@'localhost' IDENTIFIED BY 'mailuserpass';
 GRANT SELECT ON mailserver.* TO 'mailuser'@'127.0.0.1' IDENTIFIED BY 'mailuserpass';
 FLUSH PRIVILEGES;
@@ -66,8 +80,7 @@ FLUSH PRIVILEGES;
 
 ### Mysql import
 ```
-sudo mysql -uroot -p < sql/mailserver.sql
-
+sudo mysql -u root -p < sql/mailserver.sql
 sudo service mysql restart
 ```
 
@@ -101,22 +114,31 @@ sudo service dovecot restart
 sudo service mysql restart
 ```
 
-### Send local email
+### Send email
 ```
-sudo apt install mailutils
+# Install mail
+sudo apt install mailutils net-tools dnsutils
 
-echo "hello message" | mail -s "test message subject" email2@example.com
-echo "hello message" | mail -s "test message subject" email1@example.com
+# Send email
+echo "Hello message" | mail -s "Test message subject" email2@example.com
+echo "Hello message" | mail -s "Test message subject" email1@example.com
+echo "Hello message" | mail -s "Test message subject" alias@example.com
+
+# Show logs
+sudo cat /var/log/mail.log
+sudo tail -f /var/log/mail.log
 ```
 
 ### Firewall
 Smtp ports 25,465,587,110,995,143,993
 ```
-# Show services
-netstat -tulpn
+# Show working services ports
+sudo netstat -tulpn
 
 # Open ports
-ufw allow 25,465,587,995,993
+sudo ufw allow 25,465,587,995,993
+sudo ufw reload
+sudo ufw status numbered
 ```
 
 # References
