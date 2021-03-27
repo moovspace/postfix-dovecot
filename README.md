@@ -145,3 +145,7 @@ sudo ufw status numbered
 - https://www.siemaszko.info/serwer-email-z-postfix-dovecot-na-bazie-mysql-debian-lub-ubuntu
 - https://www.linode.com/docs/guides/email-with-postfix-dovecot-and-mysql
 - https://serverfault.com/questions/861050/postfix-unsupported-dictionary-type-mysql
+
+# ✉️ For the wise and the lazy 😜.
+Install hmailserver for Windows vps. Simple smtp mail server.
+- https://www.hmailserver.com
