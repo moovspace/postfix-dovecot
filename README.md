@@ -120,5 +120,6 @@ ufw allow 25,465,587,995,993
 ```
 
 # References
-- https://www.siemaszko.info/serwer-email-z-postfix-dovecot-na-bazie-mysql-debian-lub-ubuntu/
+- https://www.siemaszko.info/serwer-email-z-postfix-dovecot-na-bazie-mysql-debian-lub-ubuntu
+- https://www.linode.com/docs/guides/email-with-postfix-dovecot-and-mysql
 - https://serverfault.com/questions/861050/postfix-unsupported-dictionary-type-mysql
